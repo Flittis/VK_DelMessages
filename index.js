@@ -3,12 +3,8 @@
 var VK = require("VK-Promise"),
     vk = new VK(" < token here > ");
 
-console.log("Auth successfull!");
-
 // Starting longpoll server
 vk.longpoll.start();
-
-console.log("Longpoll started successfully!");
 
 // Keywords to delete
 let dellast = "ой"; // delete yours last message
@@ -26,7 +22,7 @@ let delFunc = function(ids) {
 vk.on("message", function(event, msg) {
 
     if(!msg.out) return;
-    if(msg.body.toLowerCase() != dellast && msg.body.toLowerCase() != delall) return;
+    if(!msg.body.toLowerCase().startsWith(dellast) && msg.body.toLowerCase() != delall) return;
 
     let thispeer = msg.peer_id;
 
@@ -36,8 +32,14 @@ vk.on("message", function(event, msg) {
     }).then((res) => {
         var ids = [];
 
-        if(msg.body.toLowerCase() == dellast) {
-              for(var x = 0; ids.length <= 1; x++) if(res.items[x].out == 1) ids.push(res.items[x].id);
+        if(msg.body.toLowerCase().startsWith(dellast)) {
+              let num = msg.body.toLowerCase().replace(dellast, '').trim();
+              if(num && num.match(/[а-яёa-z]/g)) return;
+
+              var lengthTo = 1;
+              if(num && num.match(/\d+/)) lengthTo = parseInt(num);
+
+              for(var x = 0; ids.length <= lengthTo; x++) if(res.items[x].out == 1) ids.push(res.items[x].id);
               delFunc(ids);
         } else if(msg.body.toLowerCase() == delall) {
               vk.utils.getServerTime().then((result) => {
@@ -49,4 +51,4 @@ vk.on("message", function(event, msg) {
               });
         }
     });
-})
+});

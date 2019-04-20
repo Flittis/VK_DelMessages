@@ -48,7 +48,7 @@ vk.on("message", function(event, msg) {
                       if(res.items[x].out && subtract < 86000) ids.push(res.items[x].id);
                   }
                   delFunc(ids);
-              });
+              })
         }
-    });
-});
+    })
+})

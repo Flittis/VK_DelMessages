@@ -33,15 +33,18 @@ function onMessage(event, msg) {
                 if(lengthTo < 1) return;
 
                 for(var x = 0; ids.length <= lengthTo; x++) {
-                    if(res.items[x].out == 1) ids.push(res.items[x].id);
+                  if(res.items[x].out == 1) ids.push(res.items[x].id);
 
-                    if(isEdit && x != 0) vk.messages.edit({ peer_id: msg.peer_id, message_id: ids[x], message: editto });
+                  if(isEdit && x != 0) vk.messages.edit({ peer_id: msg.peer_id, message_id: res.items[x].id, message: editto });
                 }
+
                 delFunc(ids);
           } else if(msg.body.toLowerCase() == delall) {
                 vk.utils.getServerTime().then((result) => {
-                    for(var x = 0; x < res.items.length; x++)
-                        if(res.items[x].out && (result - res.items[x].date) < 86000) ids.push(res.items[x].id);
+                    for(var x = 0; x < res.items.length; x++) {
+                        subtract = result - res.items[x].date;
+                        if(res.items[x].out && subtract < 86000) ids.push(res.items[x].id);
+                    }
 
                     delFunc(ids);
                 });

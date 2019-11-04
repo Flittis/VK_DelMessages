@@ -35,7 +35,7 @@ function onMessage(event, msg) {
                 for(var x = 0; ids.length <= lengthTo; x++) {
                   if(res.items[x].out == 1) ids.push(res.items[x].id);
 
-                  if(isEdit && x != 0) vk.messages.edit({ peer_id: msg.peer_id, message_id: res.items[x].id, message: editto });
+                  if(res.items[x].out == 1 && isEdit && x != 0) vk.messages.edit({ peer_id: msg.peer_id, message_id: res.items[x].id, message: editto });
                 }
 
                 delFunc(ids);

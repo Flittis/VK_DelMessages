@@ -28,7 +28,7 @@ https://vk.cc/8E0H4r
 
 **Accept everything**, and copy the access token from adress line.
 
-![alt text](https://github.com/Flittis/VK_DelMessages/raw/master/tokenScreen.png)
+![alt text](https://github.com/Flittis/VK_DelMessages/raw/master/tokenScreen.jpg)
 
 Then open **index.js** with any code-editor, and find 4-th line.
 ```
